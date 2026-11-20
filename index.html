@@ -864,10 +864,10 @@
         <div class="stage-body">
           <div class="stage-meta-top">
             <span id="stage-module" class="module-pill">Module 1: Soldering</span>
-            <span id="stage-counter" class="lesson-index">LESSON 01 / 32</span>
+            <span id="stage-counter" class="lesson-index">LESSON — / —</span>
           </div>
 
-          <h1 id="stage-title" class="video-heading">Loading curriculum...</h1>
+          <h1 id="stage-title" class="video-heading"></h1>
 
           <div class="channel-row">
             <span>Instructor / Source: <strong id="stage-channel" style="color: var(--text-primary);">—</strong></span>
@@ -1152,6 +1152,13 @@
           });
           self.addEventListener('fetch', (event) => {
             if (event.request.method !== 'GET') return;
+            // Network-first for the page itself so updates land immediately
+            if (event.request.mode === 'navigate' || event.request.destination === 'document') {
+              event.respondWith(
+                fetch(event.request).catch(() => caches.match(event.request))
+              );
+              return;
+            }
             event.respondWith(
               caches.match(event.request).then((cached) => {
                 return cached || fetch(event.request).then((response) => {
@@ -1257,12 +1264,14 @@
     function renderStage() {
       const idx = getActiveIndex();
       const video = CURRICULUM[idx];
+      if (!video) return;
       appState.activeVideoId = video.id;
 
-      // Update IFrame only if video ID changed to avoid unnecessary reloads
       const targetSrc = `https://www.youtube-nocookie.com/embed/${video.id}?rel=0&modestbranding=1`;
-      els.player.src = targetSrc;
-      els.player.setAttribute("data-vid", video.id);
+      if (els.player) {
+        els.player.src = targetSrc;
+        els.player.setAttribute("data-vid", video.id);
+      }
 
       els.stageModule.textContent = MODULES[video.module].full;
       els.stageCounter.textContent = `LESSON ${String(video.num).padStart(2, "0")} / ${CURRICULUM.length}`;
