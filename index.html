@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="ROV Training" />
-  <meta name="description" content="Complete ROV Maintainer Training Curriculum covering Soldering, Board Rework, Relays, Servos, Hydraulics, and Fiber Optics." />
+  <meta name="description" content="Complete ROV Maintainer Training Curriculum covering Soldering, Board Rework, Hydraulics, Fiber Optics, Electrical/HV Safety, Schematics, LARS, and HSEQ." />
   <title>ROV Maintainer Training Curriculum</title>
   <link id="dynamic-manifest" rel="manifest" />
   <link id="dynamic-apple-icon" rel="apple-touch-icon" />
@@ -991,7 +991,10 @@
       1: { short: "M1: Soldering", full: "Module 1: Soldering (Standards, Terminals & Surface Mount)" },
       2: { short: "M2: Board Rework", full: "Module 2: Board & Mechanical Repair (Milling, Pad/Trace Reconstruction)" },
       3: { short: "M3: Hydraulics & Control", full: "Module 3: Relays, Servos, Fittings & Hydraulics" },
-      4: { short: "M4: Fiber Optics", full: "Module 4: Fiber Optic Repair (Stripping, Cleaving, Splicing & OTDR)" }
+      4: { short: "M4: Fiber Optics", full: "Module 4: Fiber Optic Repair (Stripping, Cleaving, Splicing & OTDR)" },
+      5: { short: "M5: Electrical & Safety", full: "Module 5: Electrical Systems, HV Safety, LOTO & Insulation Testing" },
+      6: { short: "M6: Hydraulic Schematics", full: "Module 6: Hydraulic Circuit Schematics & System Diagnostics" },
+      7: { short: "M7: LARS & HSEQ", full: "Module 7: Launch & Recovery Systems, PTW, Toolbox Talks & Operations" }
     };
 
     const CURRICULUM = [
@@ -1034,6 +1037,22 @@
       { num: 30, id: "vjpkQbgbAik", module: 4, title: "How To Splice Ribbon Fiber | Instructional", channel: "Fiber Instrument Sales", tags: ["Fusion Splicing", "Arc Calibration", "Low Attenuation"] },
       { num: 31, id: "xChGVAIfxoY", module: 4, title: "Using Real Time On An OTDR | Instructional", channel: "Fiber Instrument Sales", tags: ["OTDR Diagnostics", "Reflectance", "Tether Fault Location"] },
       { num: 32, id: "pXy2s8bfRY4", module: 4, title: "Free 2 Hour Fiber Optic Training", channel: "Fiber Instrument Sales", tags: ["Complete Fiber Course", "Connectors", "Testing & Loss Budget"] }
+
+      // Module 5: Electrical Systems, HV Safety, LOTO & Insulation Testing
+      { num: 33, id: "SADu74RhfGA", module: 5, title: "MTCS Online High Voltage Training Course (Isolation & Proving Dead)", channel: "MTCS UK | Offshore Competence & Training", tags: ["HV Isolation", "LOTO", "Proving Dead", "ROV HV", "IMCA R005"] },
+      { num: 34, id: "HcvJ_Xp-ofo", module: 5, title: "OSHA Lockout Tagout Safety Video: Electrical LOTO Procedure Training", channel: "Safelyio", tags: ["LOTO", "Energy Isolation", "OSHA", "Verification"] },
+      { num: 35, id: "3Q90RTNPJ2M", module: 5, title: "SR Cables Testing & Meggering! Insulation Resistance Testing", channel: "EHT Group", tags: ["Insulation Resistance", "Megger", "IR Testing", "Umbilical"] },
+
+      // Module 6: Hydraulic Circuit Schematics & System Diagnostics
+      { num: 36, id: "hrBq6GBPLKc", module: 6, title: "How To Read Hydraulic Power Unit Schematics", channel: "LunchBox Sessions", tags: ["HPU Schematic", "Pump Symbols", "Reservoir", "Filters"] },
+      { num: 37, id: "4wp5jpGdumM", module: 6, title: "How To Read Valve Section Schematics", channel: "LunchBox Sessions", tags: ["Directional Valves", "Relief Valves", "Circuit Reading"] },
+      { num: 38, id: "p2hra4R0_KI", module: 6, title: "How to Read Cylinder Section Schematics", channel: "LunchBox Sessions", tags: ["Actuators", "Cylinder Symbols", "Schematic Reading"] },
+
+      // Module 7: Launch & Recovery Systems, PTW, Toolbox Talks & Operations
+      { num: 39, id: "dTmz1fsyQsY", module: 7, title: "ROV - Launch and Recovery System. Winch & A-Frame", channel: "Ennsub", tags: ["LARS", "A-Frame", "Winch", "ROV Deployment"] },
+      { num: 40, id: "9uXWTCUnEng", module: 7, title: "From re-spool to ready — Launch and Recovery System (LARS) assembly", channel: "Bishop Lifting", tags: ["LARS Assembly", "Wire Rope", "Winch Re-spool"] },
+      { num: 41, id: "LZrqRKzVz9U", module: 7, title: "Permit to work system in oil and gas industry | PTW Safety Complete Training", channel: "SoNu SiNgH Refinery", tags: ["PTW", "Permit to Work", "Offshore Safety", "HSEQ"] },
+      { num: 42, id: "cbXpHHiAp00", module: 7, title: "How to Conduct an Effective Toolbox Talk | Complete HSE Training Guide", channel: "DORIS HSE DOMAIN", tags: ["Toolbox Talk", "TBT", "Risk Assessment", "Pre-job Brief"] }
     ];
 
     /* ==========================================================================
