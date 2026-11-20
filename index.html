@@ -1,1 +1,1608 @@
-FULL_HTML_CONTENT_HERE_WILL_BE_REPLACED_BY_SYSTEM_IF_NEEDED
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="ROV Training" />
+  <meta name="description" content="Complete ROV Maintainer Training Curriculum covering Soldering, Board Rework, Relays, Servos, Hydraulics, and Fiber Optics." />
+  <title>ROV Maintainer Training Curriculum</title>
+  <link id="dynamic-manifest" rel="manifest" />
+  <link id="dynamic-apple-icon" rel="apple-touch-icon" />
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS & RESET (Zero-Dependency Tactical/Subsea Dark UI)
+       ========================================================================== */
+    :root {
+      --bg-void: #070b14;
+      --bg-base: #0b1120;
+      --bg-surface: #0f172a;
+      --bg-elevated: #1e293b;
+      --bg-hover: #263349;
+      --border-subtle: #1e293b;
+      --border-strong: #334155;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-cyan: #06b6d4;
+      --accent-cyan-dim: rgba(6, 182, 212, 0.14);
+      --accent-cyan-border: rgba(6, 182, 212, 0.4);
+      --accent-amber: #f59e0b;
+      --accent-amber-dim: rgba(245, 158, 11, 0.15);
+      --accent-emerald: #10b981;
+      --accent-emerald-dim: rgba(16, 185, 129, 0.15);
+      --accent-rose: #f43f5e;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.55), 0 4px 10px -2px rgba(0, 0, 0, 0.4);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-base);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-strong);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       HEADER & TELEMETRY TOPBAR
+       ========================================================================== */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(11, 17, 32, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.75rem 1rem;
+    }
+
+    .topbar-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, #0e7490, #0f172a);
+      border: 1px solid var(--accent-cyan-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+    }
+
+    .brand-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand-sub {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .pwa-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      color: var(--text-secondary);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
+    }
+
+    .status-dot.offline {
+      background: var(--accent-amber);
+      box-shadow: 0 0 8px var(--accent-amber);
+    }
+
+    .topbar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* ==========================================================================
+       BUTTONS & INTERACTIVE CONTROLS
+       ========================================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.5rem 0.85rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      user-select: none;
+      min-height: 36px;
+    }
+
+    .btn:hover {
+      background: var(--bg-elevated);
+      border-color: var(--text-muted);
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .btn-primary {
+      background: var(--accent-cyan);
+      border-color: var(--accent-cyan);
+      color: #041019;
+    }
+
+    .btn-primary:hover {
+      background: #22d3ee;
+      border-color: #22d3ee;
+    }
+
+    .btn-success {
+      background: var(--accent-emerald-dim);
+      border-color: rgba(16, 185, 129, 0.5);
+      color: #34d399;
+    }
+
+    .btn-success:hover {
+      background: rgba(16, 185, 129, 0.25);
+    }
+
+    .btn-amber {
+      background: var(--accent-amber-dim);
+      border-color: rgba(245, 158, 11, 0.45);
+      color: #fbbf24;
+    }
+
+    .btn-amber:hover {
+      background: rgba(245, 158, 11, 0.25);
+    }
+
+    .btn-sm {
+      font-size: 0.75rem;
+      padding: 0.35rem 0.65rem;
+      min-height: 30px;
+    }
+
+    .kbd {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: inherit;
+    }
+
+    /* ==========================================================================
+       MAIN LAYOUT GRID
+       ========================================================================== */
+    .app-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 1080px) {
+      .app-container {
+        grid-template-columns: minmax(0, 1.35fr) minmax(380px, 0.9fr);
+        align-items: start;
+      }
+    }
+
+    /* ==========================================================================
+       STAGE / VIDEO PLAYER PANEL
+       ========================================================================== */
+    .stage-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+
+    .player-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 Aspect Ratio */
+      background: #03060c;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .player-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .offline-player-notice {
+      position: absolute;
+      inset: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1.5rem;
+      background: radial-gradient(circle at center, #0f172a, #050811);
+      gap: 0.75rem;
+    }
+
+    .offline-player-notice.visible {
+      display: flex;
+    }
+
+    .stage-body {
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .stage-meta-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .module-pill {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-sm);
+      background: var(--accent-cyan-dim);
+      border: 1px solid var(--accent-cyan-border);
+      color: var(--accent-cyan);
+    }
+
+    .lesson-index {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+
+    .video-heading {
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text-primary);
+    }
+
+    .channel-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 0.18rem 0.5rem;
+      border-radius: 4px;
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-strong);
+    }
+
+    .stage-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.65rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .nav-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* ==========================================================================
+       TECHNICIAN BENCH NOTES
+       ========================================================================== */
+    .notes-panel {
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .notes-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .notes-title {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .notes-saved-indicator {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent-emerald);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .notes-saved-indicator.show {
+      opacity: 1;
+    }
+
+    .notes-textarea {
+      width: 100%;
+      min-height: 115px;
+      resize: vertical;
+      background: var(--bg-base);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 0.75rem;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      line-height: 1.5;
+      transition: border-color 0.15s ease;
+    }
+
+    .notes-textarea:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
+    }
+
+    /* ==========================================================================
+       CURRICULUM SIDEBAR & PROGRESS TELEMETRY
+       ========================================================================== */
+    .sidebar-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .progress-card {
+      padding: 1rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .progress-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .progress-label {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+    }
+
+    .progress-stats {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: var(--bg-base);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border-strong);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #0891b2, #10b981);
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .module-mini-bars {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+      padding-top: 0.25rem;
+    }
+
+    .mini-stat {
+      background: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .mini-stat-top {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+    }
+
+    .mini-track {
+      height: 4px;
+      background: var(--bg-elevated);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .mini-fill {
+      height: 100%;
+      background: var(--accent-cyan);
+      transition: width 0.3s ease;
+    }
+
+    /* Filter & Search Controls */
+    .filter-card {
+      padding: 0.9rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .search-box {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-base);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 0.55rem 0.85rem 0.55rem 2.25rem;
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .tab-btn {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.35rem 0.6rem;
+      border-radius: var(--radius-sm);
+      background: var(--bg-base);
+      border: 1px solid var(--border-strong);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-primary);
+      border-color: var(--text-muted);
+    }
+
+    .tab-btn.active {
+      background: var(--accent-cyan-dim);
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+    }
+
+    /* Curriculum List */
+    .lesson-list {
+      display: flex;
+      flex-direction: column;
+      max-height: 68vh;
+      overflow-y: auto;
+    }
+
+    .lesson-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .lesson-item:last-child {
+      border-bottom: none;
+    }
+
+    .lesson-item:hover {
+      background: var(--bg-elevated);
+    }
+
+    .lesson-item.active {
+      background: rgba(6, 182, 212, 0.09);
+      border-left: 3px solid var(--accent-cyan);
+    }
+
+    .lesson-item.completed .lesson-item-title {
+      color: var(--text-secondary);
+    }
+
+    .check-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 1.5px solid var(--border-strong);
+      background: var(--bg-base);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      cursor: pointer;
+      color: transparent;
+      transition: all 0.15s ease;
+    }
+
+    .check-btn:hover {
+      border-color: var(--accent-emerald);
+    }
+
+    .check-btn.checked {
+      background: var(--accent-emerald);
+      border-color: var(--accent-emerald);
+      color: #03150e;
+    }
+
+    .lesson-item-content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .lesson-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .lesson-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    .note-dot {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--accent-amber);
+      background: var(--accent-amber-dim);
+      padding: 0.05rem 0.35rem;
+      border-radius: 4px;
+    }
+
+    .lesson-item-title {
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+
+    .lesson-item-channel {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .empty-state {
+      padding: 2.5rem 1rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    /* ==========================================================================
+       TOAST NOTIFICATION & DATA MODAL
+       ========================================================================== */
+    .toast {
+      position: fixed;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      z-index: 100;
+      background: var(--bg-elevated);
+      border: 1px solid var(--accent-cyan-border);
+      color: var(--text-primary);
+      padding: 0.7rem 1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.82rem;
+      font-weight: 500;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65);
+      transform: translateY(120%);
+      opacity: 0;
+      transition: all 0.25s ease;
+      max-width: 340px;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .data-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+    }
+
+    .shortcut-hint {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    @media (max-width: 640px) {
+      .shortcut-hint {
+        display: none;
+      }
+      .video-heading {
+        font-size: 1.08rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP TELEMETRY & PWA BAR -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="7" width="18" height="10" rx="3" />
+            <circle cx="8" cy="12" r="2" />
+            <circle cx="16" cy="12" r="2" />
+            <path d="M12 7V4M9 4h6M6 17v2M18 17v2" />
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title">
+            ROV Maintainer Curriculum
+            <span id="pwa-badge" class="pwa-status-badge" title="Progressive Web App & Offline Cache Status">
+              <span id="net-dot" class="status-dot"></span>
+              <span id="pwa-status-text">PWA READY</span>
+            </span>
+          </div>
+          <div class="brand-sub">Subsea Electronics &bull; Hydraulics &bull; Fiber Optics</div>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <button id="btn-install-pwa" class="btn btn-amber btn-sm" style="display: none;" title="Install as Standalone App">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+          Install App
+        </button>
+        <button id="btn-download-html" class="btn btn-sm" title="Download this complete self-contained HTML file for offline use">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Save HTML
+        </button>
+        <button id="btn-export-json" class="btn btn-sm" title="Export progress and notes to JSON">
+          Export JSON
+        </button>
+        <button id="btn-import-json" class="btn btn-sm" title="Import progress and notes from JSON">
+          Import JSON
+        </button>
+        <input type="file" id="import-file-input" accept=".json,application/json" style="display: none;" />
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN WORKSPACE -->
+  <main class="app-container">
+
+    <!-- LEFT / TOP: VIDEO STAGE & TECHNICIAN BENCH NOTES -->
+    <section class="stage-column">
+      <article class="card">
+        <div class="player-wrapper">
+          <iframe
+            id="yt-player"
+            title="ROV Training Video Player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            referrerpolicy="strict-origin-when-cross-origin">
+          </iframe>
+          <div id="offline-notice" class="offline-player-notice">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M1 1l22 22M16.72 11.06A10.94 10.94 0 0119 12.55M5 12.55a10.94 10.94 0 015.17-2.39M10.71 5.05A16 16 0 0122.58 9M1.42 9a15.91 15.91 0 014.7-2.88M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg>
+            <strong>Offline Mode Active</strong>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); max-width: 360px;">
+              YouTube video streaming requires an active network connection. Your curriculum index, completion checkboxes, and technician notes remain fully available offline.
+            </p>
+          </div>
+        </div>
+
+        <div class="stage-body">
+          <div class="stage-meta-top">
+            <span id="stage-module" class="module-pill">Module 1: Soldering</span>
+            <span id="stage-counter" class="lesson-index">LESSON 01 / 32</span>
+          </div>
+
+          <h1 id="stage-title" class="video-heading">Loading curriculum...</h1>
+
+          <div class="channel-row">
+            <span>Instructor / Source: <strong id="stage-channel" style="color: var(--text-primary);">—</strong></span>
+            <span>&bull;</span>
+            <span id="stage-yt-id" style="font-family: var(--font-mono); font-size: 0.75rem;">ID: —</span>
+          </div>
+
+          <div id="stage-tags" class="tag-list"></div>
+
+          <div class="stage-controls">
+            <div class="nav-group">
+              <button id="btn-prev" class="btn" title="Previous Lesson (Shortcut: P)">
+                &larr; Prev <span class="kbd">P</span>
+              </button>
+              <button id="btn-next" class="btn" title="Next Lesson (Shortcut: N)">
+                Next <span class="kbd">N</span> &rarr;
+              </button>
+            </div>
+
+            <div class="nav-group">
+              <a id="btn-open-yt" href="#" target="_blank" rel="noopener noreferrer" class="btn" title="Open video directly on YouTube">
+                Open on YouTube &#8599;
+              </a>
+              <button id="btn-toggle-complete" class="btn btn-primary" title="Toggle Completed (Shortcut: M)">
+                <span id="complete-btn-icon">&#9744;</span>
+                <span id="complete-btn-text">Mark Completed</span>
+                <span class="kbd">M</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- TECHNICIAN NOTES -->
+      <article class="card notes-panel">
+        <div class="notes-header">
+          <div class="notes-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            Technician Bench Notes (Auto-Saved Locally)
+          </div>
+          <span id="notes-saved-badge" class="notes-saved-indicator">SAVED TO STORAGE</span>
+        </div>
+        <textarea
+          id="notes-input"
+          class="notes-textarea"
+          placeholder="Log torque specs, tip temperatures, IPC acceptance criteria, Swagelok turn counts, OTDR wavelengths, or troubleshooting steps for this module..."></textarea>
+      </article>
+
+      <!-- KEYBOARD SHORTCUTS FOOTER -->
+      <div class="data-bar">
+        <div class="shortcut-hint">
+          <span><span class="kbd">N</span> Next Video</span>
+          <span><span class="kbd">P</span> Previous Video</span>
+          <span><span class="kbd">M</span> Mark Completed</span>
+          <span><span class="kbd">/</span> Search Curriculum</span>
+        </div>
+        <button id="btn-reset-progress" class="btn btn-sm" style="color: var(--accent-rose); border-color: rgba(244, 63, 94, 0.35);">
+          Reset Progress
+        </button>
+      </div>
+    </section>
+
+    <!-- RIGHT: PROGRESS TELEMETRY & CURRICULUM INDEX -->
+    <aside class="sidebar-column">
+      <!-- COMPLETION PROGRESS -->
+      <div class="card progress-card">
+        <div class="progress-header">
+          <span class="progress-label">Overall Certification Readiness</span>
+          <span id="overall-stats" class="progress-stats">0 / 32 (0%)</span>
+        </div>
+        <div class="progress-track">
+          <div id="overall-bar" class="progress-fill"></div>
+        </div>
+
+        <div class="module-mini-bars" id="module-mini-bars">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- FILTER & SEARCH -->
+      <div class="card filter-card">
+        <div class="search-box">
+          <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input
+            type="search"
+            id="search-input"
+            class="search-input"
+            placeholder="Search title, channel, or topic (press /)..." />
+        </div>
+
+        <div class="filter-tabs" id="filter-tabs">
+          <button class="tab-btn active" data-module="all">All (32)</button>
+          <button class="tab-btn" data-module="1">M1: Soldering</button>
+          <button class="tab-btn" data-module="2">M2: Board Rework</button>
+          <button class="tab-btn" data-module="3">M3: Hydraulics &amp; Control</button>
+          <button class="tab-btn" data-module="4">M4: Fiber Optics</button>
+        </div>
+      </div>
+
+      <!-- LESSON LIST -->
+      <div class="card">
+        <div id="lesson-list" class="lesson-list" role="list">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- TOAST FEEDBACK -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    /* ==========================================================================
+       1. CURRICULUM DATASET (32 Curated Videos in Exact Sequence)
+       ========================================================================== */
+    const MODULES = {
+      1: { short: "M1: Soldering", full: "Module 1: Soldering (Standards, Terminals & Surface Mount)" },
+      2: { short: "M2: Board Rework", full: "Module 2: Board & Mechanical Repair (Milling, Pad/Trace Reconstruction)" },
+      3: { short: "M3: Hydraulics & Control", full: "Module 3: Relays, Servos, Fittings & Hydraulics" },
+      4: { short: "M4: Fiber Optics", full: "Module 4: Fiber Optic Repair (Stripping, Cleaving, Splicing & OTDR)" }
+    };
+
+    const CURRICULUM = [
+      // Module 1: Soldering (Standards, Terminals & Surface Mount)
+      { num: 1, id: "hsKcKvs5dNE", module: 1, title: "Master Soldering: IPC-J-STD-001 Soldering Techniques", channel: "John Gammell", tags: ["IPC J-STD-001", "Wetting", "Thermal Control", "Standards"] },
+      { num: 2, id: "bWIaUtqTPaM", module: 1, title: "Master Soldering: Wire & Terminal Connections - IPC J-STD-001", channel: "John Gammell", tags: ["Turret Terminals", "Cup Terminals", "Wire Prep", "Harnessing"] },
+      { num: 3, id: "xhescTuFs-U", module: 1, title: "How to solder a J-hook Terminal", channel: "John Gammell", tags: ["J-Hook", "Mechanical Wrap", "Stress Relief", "Subsea Interconnect"] },
+      { num: 4, id: "_6tpQE7ptqo", module: 1, title: "Master Soldering: IPC J-STD-001 Chip & MELF soldering", channel: "John Gammell", tags: ["SMD Passives", "MELF", "Fillets", "IPC Inspection"] },
+      { num: 5, id: "6PB0u8irn-4", module: 1, title: "Master Soldering: Surface Mount Fine-Pitch - Highly Recommended", channel: "John Gammell", tags: ["Fine-Pitch QFP", "Drag Soldering", "Flux Management", "IC Rework"] },
+
+      // Module 2: Board & Mechanical Repair (Milling, Pad/Trace Reconstruction & Damage)
+      { num: 6, id: "m0TkfCRudDU", module: 2, title: "Cold Component Removal-PCB Board Precision Milling", channel: "SolderingGeek", tags: ["Precision Milling", "Cold Removal", "Substrate Protection"] },
+      { num: 7, id: "B6FDkP7_glU", module: 2, title: "IPC 7711/7721 Circuit Board Repair Guide — Complete Introduction", channel: "Circuit Technology Center, Inc.", tags: ["IPC-7711/7721", "Laminate Repair", "2M Standards", "Rework Overview"] },
+      { num: 8, id: "AR0lb7YI0v4", module: 2, title: "How To Repair Damaged / Missing PCB Pads || 4 Great Methods", channel: "Mr SolderFix", tags: ["Lifted Pads", "Epoxy Bonding", "Pad Reconstruction"] },
+      { num: 9, id: "fzAMAZFv9D0", module: 2, title: "How To Repair Damaged PCB Pads / Traces || Copper Soldering", channel: "Mr SolderFix", tags: ["Broken Traces", "Copper Foil", "Jumper Routing"] },
+      { num: 10, id: "JtPmpqRWU2Q", module: 2, title: "How To Repair Damaged Pads, Traces and IC Pins", channel: "Mr SolderFix", tags: ["IC Pin Restoration", "Micro-Jumpers", "PCB Triage"] },
+
+      // Module 3: Relays, Servos, Fittings & Hydraulics
+      { num: 11, id: "FFL6cXns0R4", module: 3, title: "How Relays Work | Electromagnetic Relays Explained", channel: "ISCA Engineering", tags: ["Electromagnetic Relays", "Coil & Contacts", "Switching"] },
+      { num: 12, id: "n594CkrP6xE", module: 3, title: "How Relays Work - Basic Working Principle", channel: "The Engineering Mindset", tags: ["NO/NC Contacts", "Flyback Protection", "Control Circuits"] },
+      { num: 13, id: "_lrk2yN4Vnk", module: 3, title: "How a Relay Works in Electrical Schematics", channel: "Chris Guyatt", tags: ["Ladder Schematics", "Troubleshooting", "Control Logic"] },
+      { num: 14, id: "q1labA0dx0M", module: 3, title: "Proportional Hydraulics, Proportional Valve, Servo Valve - How It Works", channel: "learnchannel", tags: ["Servo Valves", "Proportional Control", "Manipulators"] },
+      { num: 15, id: "5jmSS8EQ-9M", module: 3, title: "What are Servo Control Valves? - Tutorials and Explanation", channel: "Instrumentation Tools", tags: ["Closed-Loop", "Spool Actuation", "Electro-Hydraulic"] },
+      { num: 16, id: "jB_Nyje_HNE", module: 3, title: "How to Assemble Tube Fittings (1\" and Under)", channel: "Swagelok", tags: ["Swagelok", "Twin-Ferrule", "1-1/4 Turns", "Gap Gauge"] },
+      { num: 17, id: "4vVaZ91niQk", module: 3, title: "How to Assemble Tube Adapters (1\" and Under)", channel: "Swagelok", tags: ["Tube Adapters", "High Pressure", "Leak-Free Seal"] },
+      { num: 18, id: "_x2LVd2oPW4", module: 3, title: "Parker Triple-Lok Hydraulic Fitting Assembly", channel: "Parker Hannifin", tags: ["Triple-Lok", "37-Degree Flare", "Torque Specs"] },
+      { num: 19, id: "miL2OhH5xwU", module: 3, title: "Mastering JIC Connections: Step-by-Step Assembly Guide", channel: "Tompkins Industries, INC", tags: ["JIC 37°", "Flats From Wrench Resistance", "Hydraulic Hoses"] },
+      { num: 20, id: "nxwIegjzyUU", module: 3, title: "How to Assemble the Parflex 51R Field Attachable Hydraulic Fittings", channel: "Parker Hannifin", tags: ["Field Attachable", "Thermoplastic Hose", "Subsea Whip Repair"] },
+      { num: 21, id: "Isc08DU6WTE", module: 3, title: "Relief Valve Basics", channel: "LunchBox Sessions", tags: ["Pressure Relief", "Overpressure Protection", "HPU"] },
+      { num: 22, id: "nuMgLgBNG1k", module: 3, title: "How To Interpret Pressure Valves", channel: "LunchBox Sessions", tags: ["Hydraulic Schematics", "Sequence & Reducing Valves"] },
+      { num: 23, id: "h67OZtgbTlY", module: 3, title: "How to Use System Pressure to Troubleshoot", channel: "LunchBox Sessions", tags: ["Pressure Diagnostics", "Internal Leakage", "Fault Isolation"] },
+      { num: 24, id: "jcCG6yJw1FY", module: 3, title: "Pressure Compensated Pump Adjustments - Part 1", channel: "LunchBox Sessions", tags: ["Variable Displacement", "Compensator Spool", "ROV HPU"] },
+      { num: 25, id: "Wbr0LxEPoCY", module: 3, title: "Hydraulics Maintenance and Troubleshooting Stories", channel: "LunchBox Sessions", tags: ["Field Maintenance", "Contamination Control", "Diagnostics"] },
+      { num: 26, id: "mETStnqhHmM", module: 3, title: "Tecnadyne PC2X Pressure Compensator Operation", channel: "Tecnadyne", tags: ["Subsea Pressure Compensation", "Oil-Filled Pods", "Depth Rating"] },
+
+      // Module 4: Fiber Optic Repair (Stripping, Cleaving, Splicing, Testing & Full Course)
+      { num: 27, id: "KrCF5niXrfo", module: 4, title: "Fundamentals of Fiber Optic Stripping | Johnny's Tool Box", channel: "Fiber Instrument Sales", tags: ["Buffer Stripping", "Cladding Safety", "Fiber Prep"] },
+      { num: 28, id: "svlOdan3Lns", module: 4, title: "How To Strip Fiber Optic Cable | Instructional", channel: "Fiber Instrument Sales", tags: ["Jacket Removal", "Kevlar Strength Member", "Tether Prep"] },
+      { num: 29, id: "iyCtMSSX9-0", module: 4, title: "Cleaving: Prepping Fiber Optic Cable | Instructional", channel: "Fiber Instrument Sales", tags: ["Precision Cleaver", "End-Face Angle", "Splice Prep"] },
+      { num: 30, id: "vjpkQbgbAik", module: 4, title: "How To Splice Ribbon Fiber | Instructional", channel: "Fiber Instrument Sales", tags: ["Fusion Splicing", "Arc Calibration", "Low Attenuation"] },
+      { num: 31, id: "xChGVAIfxoY", module: 4, title: "Using Real Time On An OTDR | Instructional", channel: "Fiber Instrument Sales", tags: ["OTDR Diagnostics", "Reflectance", "Tether Fault Location"] },
+      { num: 32, id: "pXy2s8bfRY4", module: 4, title: "Free 2 Hour Fiber Optic Training", channel: "Fiber Instrument Sales", tags: ["Complete Fiber Course", "Connectors", "Testing & Loss Budget"] }
+    ];
+
+    /* ==========================================================================
+       2. STATE MANAGEMENT & LOCALSTORAGE PERSISTENCE
+       ========================================================================== */
+    const STORAGE_KEY = "rov_maintainer_pwa_state_v1";
+
+    let appState = {
+      activeVideoId: CURRICULUM[0].id,
+      completed: {}, // { [videoId]: true }
+      notes: {},     // { [videoId]: "string" }
+      filterModule: "all",
+      searchQuery: ""
+    };
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          appState = {
+            ...appState,
+            ...parsed,
+            completed: parsed.completed || {},
+            notes: parsed.notes || {}
+          };
+        }
+      } catch (err) {
+        console.warn("Unable to read localStorage:", err);
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+      } catch (err) {
+        console.warn("Unable to write localStorage:", err);
+      }
+    }
+
+    /* ==========================================================================
+       3. PWA MANIFEST (DYNAMIC BLOB) & SERVICE WORKER REGISTRATION
+       ========================================================================== */
+    function initPWA() {
+      // Generate crisp tactical ROV SVG icons as data URLs
+      const createSvgIcon = (size) => {
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 512 512">
+          <rect width="512" height="512" rx="112" fill="#0f172a"/>
+          <rect x="24" y="24" width="464" height="464" rx="92" fill="none" stroke="#06b6d4" stroke-width="16"/>
+          <rect x="96" y="168" width="320" height="176" rx="44" fill="#1e293b" stroke="#22d3ee" stroke-width="20"/>
+          <circle cx="184" cy="256" r="36" fill="#06b6d4"/>
+          <circle cx="328" cy="256" r="36" fill="#06b6d4"/>
+          <path d="M256 168V104M196 104h120M152 344v52M360 344v52" stroke="#22d3ee" stroke-width="22" stroke-linecap="round"/>
+        </svg>`;
+        return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+      };
+
+      const icon192 = createSvgIcon(192);
+      const icon512 = createSvgIcon(512);
+
+      const appleIconLink = document.getElementById("dynamic-apple-icon");
+      if (appleIconLink) appleIconLink.href = icon192;
+
+      const manifestObj = {
+        name: "ROV Maintainer Training Curriculum",
+        short_name: "ROV Training",
+        description: "Subsea ROV Technician Training: Soldering, Board Rework, Relays, Servos, Hydraulics, and Fiber Optics.",
+        start_url: window.location.href.split("#")[0],
+        display: "standalone",
+        background_color: "#0b1120",
+        theme_color: "#0f172a",
+        orientation: "any",
+        icons: [
+          { src: icon192, sizes: "192x192", type: "image/svg+xml", purpose: "any maskable" },
+          { src: icon512, sizes: "512x512", type: "image/svg+xml", purpose: "any maskable" }
+        ]
+      };
+
+      try {
+        const manifestBlob = new Blob([JSON.stringify(manifestObj)], { type: "application/manifest+json" });
+        const manifestURL = URL.createObjectURL(manifestBlob);
+        document.getElementById("dynamic-manifest").setAttribute("href", manifestURL);
+      } catch (e) {
+        console.warn("Manifest Blob creation skipped:", e);
+      }
+
+      // Register inline Service Worker where supported by origin (http/https)
+      const badgeText = document.getElementById("pwa-status-text");
+      if ("serviceWorker" in navigator && (window.location.protocol === "https:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
+        const swCode = `
+          const CACHE_NAME = 'rov-curriculum-v1';
+          self.addEventListener('install', (event) => {
+            self.skipWaiting();
+            event.waitUntil(
+              caches.open(CACHE_NAME).then((cache) => cache.addAll([self.location.href]).catch(() => {}))
+            );
+          });
+          self.addEventListener('activate', (event) => {
+            event.waitUntil(self.clients.claim());
+          });
+          self.addEventListener('fetch', (event) => {
+            if (event.request.method !== 'GET') return;
+            event.respondWith(
+              caches.match(event.request).then((cached) => {
+                return cached || fetch(event.request).then((response) => {
+                  if (response && response.status === 200 && response.type === 'basic') {
+                    const clone = response.clone();
+                    caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+                  }
+                  return response;
+                }).catch(() => cached);
+              })
+            );
+          });
+        `;
+        try {
+          const swBlob = new Blob([swCode], { type: "application/javascript" });
+          const swUrl = URL.createObjectURL(swBlob);
+          navigator.serviceWorker.register(swUrl)
+            .then(() => { badgeText.textContent = "PWA + SW ACTIVE"; })
+            .catch(() => { badgeText.textContent = "LOCAL STORAGE READY"; });
+        } catch (err) {
+          badgeText.textContent = "LOCAL STORAGE READY";
+        }
+      } else {
+        badgeText.textContent = "STANDALONE / OFFLINE READY";
+      }
+
+      // Handle beforeinstallprompt for native PWA installation
+      let deferredPrompt = null;
+      const installBtn = document.getElementById("btn-install-pwa");
+
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installBtn.style.display = "inline-flex";
+      });
+
+      installBtn.addEventListener("click", async () => {
+        if (!deferredPrompt) {
+          showToast("Use your browser menu ('Add to Home Screen' or 'Install App') to install.");
+          return;
+        }
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === "accepted") {
+          installBtn.style.display = "none";
+          showToast("App installed successfully.");
+        }
+        deferredPrompt = null;
+      });
+
+      window.addEventListener("appinstalled", () => {
+        installBtn.style.display = "none";
+        badgeText.textContent = "INSTALLED APP";
+        showToast("ROV Maintainer Curriculum installed!");
+      });
+    }
+
+    /* ==========================================================================
+       4. UI RENDERING & PLAYER CONTROLLER
+       ========================================================================== */
+    const els = {
+      player: document.getElementById("yt-player"),
+      offlineNotice: document.getElementById("offline-notice"),
+      netDot: document.getElementById("net-dot"),
+      stageModule: document.getElementById("stage-module"),
+      stageCounter: document.getElementById("stage-counter"),
+      stageTitle: document.getElementById("stage-title"),
+      stageChannel: document.getElementById("stage-channel"),
+      stageYtId: document.getElementById("stage-yt-id"),
+      stageTags: document.getElementById("stage-tags"),
+      btnPrev: document.getElementById("btn-prev"),
+      btnNext: document.getElementById("btn-next"),
+      btnOpenYt: document.getElementById("btn-open-yt"),
+      btnToggleComplete: document.getElementById("btn-toggle-complete"),
+      completeBtnIcon: document.getElementById("complete-btn-icon"),
+      completeBtnText: document.getElementById("complete-btn-text"),
+      notesInput: document.getElementById("notes-input"),
+      notesSavedBadge: document.getElementById("notes-saved-badge"),
+      overallStats: document.getElementById("overall-stats"),
+      overallBar: document.getElementById("overall-bar"),
+      moduleMiniBars: document.getElementById("module-mini-bars"),
+      searchInput: document.getElementById("search-input"),
+      filterTabs: document.getElementById("filter-tabs"),
+      lessonList: document.getElementById("lesson-list"),
+      toast: document.getElementById("toast")
+    };
+
+    let toastTimer = null;
+    function showToast(msg) {
+      els.toast.textContent = msg;
+      els.toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        els.toast.classList.remove("show");
+      }, 3000);
+    }
+
+    function getActiveIndex() {
+      const idx = CURRICULUM.findIndex((item) => item.id === appState.activeVideoId);
+      return idx >= 0 ? idx : 0;
+    }
+
+    function renderStage() {
+      const idx = getActiveIndex();
+      const video = CURRICULUM[idx];
+      appState.activeVideoId = video.id;
+
+      // Update IFrame only if video ID changed to avoid unnecessary reloads
+      const targetSrc = `https://www.youtube-nocookie.com/embed/${video.id}?rel=0&modestbranding=1`;
+      if (els.player.getAttribute("data-vid") !== video.id) {
+        els.player.src = targetSrc;
+        els.player.setAttribute("data-vid", video.id);
+      }
+
+      els.stageModule.textContent = MODULES[video.module].full;
+      els.stageCounter.textContent = `LESSON ${String(video.num).padStart(2, "0")} / ${CURRICULUM.length}`;
+      els.stageTitle.textContent = video.title;
+      els.stageChannel.textContent = video.channel;
+      els.stageYtId.textContent = `YT_ID: ${video.id}`;
+      els.btnOpenYt.href = `https://www.youtube.com/watch?v=${video.id}`;
+
+      // Tags
+      els.stageTags.innerHTML = video.tags
+        .map((t) => `<span class="tag">#${escapeHtml(t)}</span>`)
+        .join("");
+
+      // Prev/Next buttons
+      els.btnPrev.disabled = idx === 0;
+      els.btnNext.disabled = idx === CURRICULUM.length - 1;
+
+      // Completed button state
+      const isDone = Boolean(appState.completed[video.id]);
+      if (isDone) {
+        els.btnToggleComplete.className = "btn btn-success";
+        els.completeBtnIcon.innerHTML = "&#9745;";
+        els.completeBtnText.textContent = "Completed";
+      } else {
+        els.btnToggleComplete.className = "btn btn-primary";
+        els.completeBtnIcon.innerHTML = "&#9744;";
+        els.completeBtnText.textContent = "Mark Completed";
+      }
+
+      // Technician notes
+      els.notesInput.value = appState.notes[video.id] || "";
+    }
+
+    function renderProgress() {
+      const total = CURRICULUM.length;
+      const doneCount = CURRICULUM.filter((v) => appState.completed[v.id]).length;
+      const pct = Math.round((doneCount / total) * 100);
+
+      els.overallStats.textContent = `${doneCount} / ${total} (${pct}%)`;
+      els.overallBar.style.width = `${pct}%`;
+
+      // Per-module mini telemetry bars
+      const moduleIds = [1, 2, 3, 4];
+      els.moduleMiniBars.innerHTML = moduleIds.map((mId) => {
+        const modVideos = CURRICULUM.filter((v) => v.module === mId);
+        const modDone = modVideos.filter((v) => appState.completed[v.id]).length;
+        const modPct = Math.round((modDone / modVideos.length) * 100);
+        return `
+          <div class="mini-stat">
+            <div class="mini-stat-top">
+              <span>${MODULES[mId].short}</span>
+              <span>${modDone}/${modVideos.length}</span>
+            </div>
+            <div class="mini-track">
+              <div class="mini-fill" style="width: ${modPct}%;"></div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderLessonList() {
+      const query = appState.searchQuery.trim().toLowerCase();
+      const modFilter = appState.filterModule;
+
+      const filtered = CURRICULUM.filter((v) => {
+        const matchesMod = modFilter === "all" || String(v.module) === String(modFilter);
+        if (!matchesMod) return false;
+        if (!query) return true;
+        const haystack = `${v.num} ${v.title} ${v.channel} ${v.tags.join(" ")}`.toLowerCase();
+        return haystack.includes(query);
+      });
+
+      if (filtered.length === 0) {
+        els.lessonList.innerHTML = `<div class="empty-state">No curriculum lessons match your current filter or search query.</div>`;
+        return;
+      }
+
+      els.lessonList.innerHTML = filtered.map((v) => {
+        const isActive = v.id === appState.activeVideoId;
+        const isDone = Boolean(appState.completed[v.id]);
+        const hasNote = Boolean(appState.notes[v.id] && appState.notes[v.id].trim().length > 0);
+
+        return `
+          <div class="lesson-item ${isActive ? "active" : ""} ${isDone ? "completed" : ""}" data-id="${v.id}" role="listitem">
+            <button
+              type="button"
+              class="check-btn ${isDone ? "checked" : ""}"
+              data-check-id="${v.id}"
+              title="${isDone ? "Mark as Incomplete" : "Mark as Completed"}"
+              aria-label="Toggle completion for ${escapeHtml(v.title)}">
+              &#10003;
+            </button>
+            <div class="lesson-item-content">
+              <div class="lesson-item-header">
+                <span class="lesson-num">#${String(v.num).padStart(2, "0")} &bull; M${v.module}</span>
+                ${hasNote ? `<span class="note-dot">NOTE</span>` : ""}
+              </div>
+              <div class="lesson-item-title">${escapeHtml(v.title)}</div>
+              <div class="lesson-item-channel">${escapeHtml(v.channel)}</div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      // Scroll active item smoothly into view within sidebar
+      const activeEl = els.lessonList.querySelector(".lesson-item.active");
+      if (activeEl) {
+        activeEl.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function selectVideo(videoId) {
+      appState.activeVideoId = videoId;
+      saveState();
+      renderStage();
+      renderLessonList();
+    }
+
+    function toggleVideoComplete(videoId) {
+      if (appState.completed[videoId]) {
+        delete appState.completed[videoId];
+      } else {
+        appState.completed[videoId] = true;
+      }
+      saveState();
+      renderStage();
+      renderProgress();
+      renderLessonList();
+    }
+
+    /* ==========================================================================
+       5. EVENT LISTENERS, KEYBOARD SHORTCUTS, EXPORT/IMPORT & DOWNLOAD
+       ========================================================================== */
+    function bindEvents() {
+      // Lesson list clicks (delegated)
+      els.lessonList.addEventListener("click", (e) => {
+        const checkBtn = e.target.closest("[data-check-id]");
+        if (checkBtn) {
+          e.stopPropagation();
+          toggleVideoComplete(checkBtn.getAttribute("data-check-id"));
+          return;
+        }
+        const item = e.target.closest(".lesson-item");
+        if (item) {
+          selectVideo(item.getAttribute("data-id"));
+        }
+      });
+
+      // Stage navigation & completion
+      els.btnPrev.addEventListener("click", () => {
+        const idx = getActiveIndex();
+        if (idx > 0) selectVideo(CURRICULUM[idx - 1].id);
+      });
+
+      els.btnNext.addEventListener("click", () => {
+        const idx = getActiveIndex();
+        if (idx < CURRICULUM.length - 1) selectVideo(CURRICULUM[idx + 1].id);
+      });
+
+      els.btnToggleComplete.addEventListener("click", () => {
+        toggleVideoComplete(appState.activeVideoId);
+      });
+
+      // Auto-save technician notes
+      let noteSaveTimeout = null;
+      els.notesInput.addEventListener("input", () => {
+        const vid = appState.activeVideoId;
+        appState.notes[vid] = els.notesInput.value;
+        saveState();
+        els.notesSavedBadge.classList.add("show");
+        clearTimeout(noteSaveTimeout);
+        noteSaveTimeout = setTimeout(() => {
+          els.notesSavedBadge.classList.remove("show");
+          renderLessonList(); // Update NOTE indicator badge
+        }, 900);
+      });
+
+      // Filter tabs
+      els.filterTabs.addEventListener("click", (e) => {
+        const btn = e.target.closest(".tab-btn");
+        if (!btn) return;
+        appState.filterModule = btn.getAttribute("data-module");
+        els.filterTabs.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        saveState();
+        renderLessonList();
+      });
+
+      // Search input
+      els.searchInput.value = appState.searchQuery;
+      els.searchInput.addEventListener("input", () => {
+        appState.searchQuery = els.searchInput.value;
+        saveState();
+        renderLessonList();
+      });
+
+      // Keyboard shortcuts (N, P, M, /) when not typing in input/textarea
+      document.addEventListener("keydown", (e) => {
+        const tag = document.activeElement.tagName.toLowerCase();
+        if (tag === "input" || tag === "textarea") {
+          if (e.key === "Escape") document.activeElement.blur();
+          return;
+        }
+        if (e.key === "n" || e.key === "N") {
+          e.preventDefault();
+          els.btnNext.click();
+        } else if (e.key === "p" || e.key === "P") {
+          e.preventDefault();
+          els.btnPrev.click();
+        } else if (e.key === "m" || e.key === "M") {
+          e.preventDefault();
+          els.btnToggleComplete.click();
+        } else if (e.key === "/") {
+          e.preventDefault();
+          els.searchInput.focus();
+        }
+      });
+
+      // Download Self-Contained HTML File
+      document.getElementById("btn-download-html").addEventListener("click", () => {
+        const doctype = "<!DOCTYPE html>\n";
+        const htmlContent = doctype + document.documentElement.outerHTML;
+        const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "rov-maintainer-curriculum.html";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast("Saved self-contained HTML app to your device.");
+      });
+
+      // Export JSON Progress
+      document.getElementById("btn-export-json").addEventListener("click", () => {
+        const payload = {
+          exportedAt: new Date().toISOString(),
+          curriculumVersion: "1.0",
+          completed: appState.completed,
+          notes: appState.notes
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `rov-training-progress-${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast("Exported progress & technician notes JSON.");
+      });
+
+      // Import JSON Progress
+      const importInput = document.getElementById("import-file-input");
+      document.getElementById("btn-import-json").addEventListener("click", () => {
+        importInput.click();
+      });
+
+      importInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          try {
+            const imported = JSON.parse(ev.target.result);
+            if (imported && typeof imported === "object") {
+              appState.completed = imported.completed || {};
+              appState.notes = imported.notes || {};
+              saveState();
+              renderStage();
+              renderProgress();
+              renderLessonList();
+              showToast("Progress & notes imported successfully.");
+            }
+          } catch (err) {
+            showToast("Invalid JSON backup file.");
+          }
+          importInput.value = "";
+        };
+        reader.readAsText(file);
+      });
+
+      // Reset Progress (two-step inline confirmation without confirm())
+      const resetBtn = document.getElementById("btn-reset-progress");
+      let resetArmed = false;
+      let resetTimer = null;
+      resetBtn.addEventListener("click", () => {
+        if (!resetArmed) {
+          resetArmed = true;
+          resetBtn.textContent = "Click Again to Confirm Reset";
+          resetBtn.style.background = "rgba(244, 63, 94, 0.2)";
+          resetTimer = setTimeout(() => {
+            resetArmed = false;
+            resetBtn.textContent = "Reset Progress";
+            resetBtn.style.background = "";
+          }, 3500);
+        } else {
+          clearTimeout(resetTimer);
+          resetArmed = false;
+          resetBtn.textContent = "Reset Progress";
+          resetBtn.style.background = "";
+          appState.completed = {};
+          appState.notes = {};
+          saveState();
+          renderStage();
+          renderProgress();
+          renderLessonList();
+          showToast("All progress and notes cleared.");
+        }
+      });
+
+      // Online / Offline network status detection
+      function updateNetworkUI() {
+        const online = navigator.onLine;
+        if (online) {
+          els.netDot.classList.remove("offline");
+          els.offlineNotice.classList.remove("visible");
+        } else {
+          els.netDot.classList.add("offline");
+          els.offlineNotice.classList.add("visible");
+        }
+      }
+      window.addEventListener("online", updateNetworkUI);
+      window.addEventListener("offline", updateNetworkUI);
+      updateNetworkUI();
+    }
+
+    /* ==========================================================================
+       6. BOOTSTRAP APPLICATION
+       ========================================================================== */
+    window.addEventListener("DOMContentLoaded", () => {
+      loadState();
+      // Sync initial active tab button with restored filterModule
+      els.filterTabs.querySelectorAll(".tab-btn").forEach((btn) => {
+        btn.classList.toggle("active", btn.getAttribute("data-module") === String(appState.filterModule));
+      });
+      initPWA();
+      bindEvents();
+      renderStage();
+      renderProgress();
+      renderLessonList();
+    });
+  </script>
+</body>
+</html>
