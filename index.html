@@ -936,7 +936,7 @@
       <div class="card progress-card">
         <div class="progress-header">
           <span class="progress-label">Overall Certification Readiness</span>
-          <span id="overall-stats" class="progress-stats">0 / 32 (0%)</span>
+          <span id="overall-stats" class="progress-stats">0 / 42 (0%)</span>
         </div>
         <div class="progress-track">
           <div id="overall-bar" class="progress-fill"></div>
@@ -1140,7 +1140,7 @@
       const badgeText = document.getElementById("pwa-status-text");
       if ("serviceWorker" in navigator && (window.location.protocol === "https:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
         const swCode = `
-          const CACHE_NAME = 'rov-curriculum-v1';
+          const CACHE_NAME = 'rov-curriculum-v2';
           self.addEventListener('install', (event) => {
             self.skipWaiting();
             event.waitUntil(
@@ -1261,10 +1261,8 @@
 
       // Update IFrame only if video ID changed to avoid unnecessary reloads
       const targetSrc = `https://www.youtube-nocookie.com/embed/${video.id}?rel=0&modestbranding=1`;
-      if (els.player.getAttribute("data-vid") !== video.id) {
-        els.player.src = targetSrc;
-        els.player.setAttribute("data-vid", video.id);
-      }
+      els.player.src = targetSrc;
+      els.player.setAttribute("data-vid", video.id);
 
       els.stageModule.textContent = MODULES[video.module].full;
       els.stageCounter.textContent = `LESSON ${String(video.num).padStart(2, "0")} / ${CURRICULUM.length}`;
