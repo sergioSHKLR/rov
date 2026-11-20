@@ -2,12 +2,15 @@
 
 Self-contained Progressive Web App (single HTML file) for self-led refresher and practical skills training aimed at ROV (Remotely Operated Vehicle) maintainer / technician roles.
 
-## Curriculum (32 curated lessons)
+## Curriculum (42 curated lessons)
 
 - **Module 1: Soldering** — IPC-J-STD-001 techniques, terminals, SMD/fine-pitch (John Gammell)
-- **Module 2: Board Rework** — PCB pad/trace reconstruction, milling, IPC-7711/7721 (Circuit Technology Center, Mr SolderFix)
-- **Module 3: Hydraulics & Control** — Relays, servo/proportional valves, Swagelok/Parker/JIC fittings, pressure valves, compensators, diagnostics (LunchBox Sessions, Swagelok, Parker, Tecnadyne)
-- **Module 4: Fiber Optics** — Stripping, cleaving, splicing, OTDR (Fiber Instrument Sales)
+- **Module 2: Board Rework** — PCB pad/trace reconstruction, milling, IPC-7711/7721
+- **Module 3: Hydraulics & Control** — Relays, servo/proportional valves, Swagelok/Parker/JIC fittings, pressure valves, compensators
+- **Module 4: Fiber Optics** — Stripping, cleaving, splicing, OTDR
+- **Module 5: Electrical & Safety** — HV isolation & proving dead (MTCS), LOTO procedures, insulation resistance / Megger testing
+- **Module 6: Hydraulic Schematics** — HPU, valve section, and cylinder schematic reading (LunchBox Sessions)
+- **Module 7: LARS & HSEQ** — Launch & Recovery Systems (A-frame/winch), Permit to Work (PTW), Toolbox Talks
 
 ## Features
 
@@ -22,19 +25,12 @@ Self-contained Progressive Web App (single HTML file) for self-led refresher and
 
 ## Suitability for ROV Maintainer Career Path
 
-Strong practical refresher for the hands-on skills most relevant to ROV electronics, hydraulic interconnects, and fiber tethers:
+Expanded to close major gaps relative to IMCA R010 / R002:
 
-- Aligns closely with the practical portions of IMCA R010 Modules 4–6 (electrical/electronic systems, mechanical/hydraulic) and fiber-optic elements of control systems.
-- IPC soldering and board rework are high-value for subsea electronics pods and repair.
-- Tube fitting assembly (Swagelok, Parker, JIC) and hydraulic valve/compensator knowledge map directly to ROV HPU and manipulator maintenance.
-- Fiber stripping/cleaving/splicing/OTDR is essential for umbilical and tether work.
-
-**Limitations** (does not replace formal requirements):
-- Theory-only on full electrical schematics, HV safety systems, complete hydraulic circuit design, LARS, lifting operations, and offshore HSEQ (see IMCA R002/R010 full modules).
-- No substitute for IMCA-approved introductory course, offshore medical, BOSIET/survival training, manufacturer-specific system training, or progressive logbook hours under IMCA C005 (R04 → R03).
-- Best used by candidates with existing technical foundation (e.g., Navy ET, electronics, industrial maintenance) as a self-led skills sharpener before or between formal ROV courses and offshore trips.
-
-Navy Electronics Technician background is a recognized relevant entry pathway into ROV roles.
+- Practical interconnect and repair (soldering, board work, fittings, fiber) remain core.
+- New coverage of HV isolation (aligned with IMCA R005 concepts), LOTO, insulation resistance testing, full hydraulic schematic reading, LARS mechanical awareness, and basic PTW/TBT/HSEQ.
+- Still complementary to formal IMCA-approved introductory training, offshore medical, BOSIET, manufacturer-specific systems, and logbook progression under C005.
+- High value for candidates with existing technical foundation (Navy ET, electronics, industrial maintenance).
 
 ## Usage
 
