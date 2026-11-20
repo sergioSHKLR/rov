@@ -1400,11 +1400,7 @@
         `;
       }).join("");
 
-      // Scroll active item smoothly into view within sidebar
-      const activeEl = els.lessonList.querySelector(".lesson-item.active");
-      if (activeEl) {
-        activeEl.scrollIntoView({ block: "nearest", behavior: "smooth" });
-      }
+
     }
 
     function escapeHtml(str) {
