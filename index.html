@@ -1273,15 +1273,15 @@
         els.player.setAttribute("data-vid", video.id);
       }
 
-      els.stageModule.textContent = MODULES[video.module].full;
-      els.stageCounter.textContent = `LESSON ${String(video.num).padStart(2, "0")} / ${CURRICULUM.length}`;
-      els.stageTitle.textContent = video.title;
-      els.stageChannel.textContent = video.channel;
-      els.stageYtId.textContent = `YT_ID: ${video.id}`;
+      if (els.stageModule && MODULES[video.module]) els.stageModule.textContent = MODULES[video.module].full;
+      if (els.stageCounter) els.stageCounter.textContent = `LESSON ${String(video.num).padStart(2, "0")} / ${CURRICULUM.length}`;
+      if (els.stageTitle) els.stageTitle.textContent = video.title;
+      if (els.stageChannel) els.stageChannel.textContent = video.channel;
+      if (els.stageYtId) els.stageYtId.textContent = `YT_ID: ${video.id}`;
       els.btnOpenYt.href = `https://www.youtube.com/watch?v=${video.id}`;
 
       // Tags
-      els.stageTags.innerHTML = video.tags
+      if (els.stageTags) els.stageTags.innerHTML = video.tags
         .map((t) => `<span class="tag">#${escapeHtml(t)}</span>`)
         .join("");
 
@@ -1615,16 +1615,19 @@
        6. BOOTSTRAP APPLICATION
        ========================================================================== */
     window.addEventListener("DOMContentLoaded", () => {
-      loadState();
-      // Sync initial active tab button with restored filterModule
-      els.filterTabs.querySelectorAll(".tab-btn").forEach((btn) => {
-        btn.classList.toggle("active", btn.getAttribute("data-module") === String(appState.filterModule));
-      });
-      initPWA();
-      bindEvents();
-      renderStage();
-      renderProgress();
-      renderLessonList();
+      try { loadState(); } catch (e) { console.error("loadState", e); }
+      try {
+        if (els.filterTabs) {
+          els.filterTabs.querySelectorAll(".tab-btn").forEach((btn) => {
+            btn.classList.toggle("active", btn.getAttribute("data-module") === String(appState.filterModule));
+          });
+        }
+      } catch (e) { console.error("tabs", e); }
+      try { initPWA(); } catch (e) { console.error("initPWA", e); }
+      try { bindEvents(); } catch (e) { console.error("bindEvents", e); }
+      try { renderStage(); } catch (e) { console.error("renderStage", e); }
+      try { renderProgress(); } catch (e) { console.error("renderProgress", e); }
+      try { renderLessonList(); } catch (e) { console.error("renderLessonList", e); }
     });
   </script>
 </body>
