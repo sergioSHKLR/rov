@@ -6,9 +6,9 @@
   <meta name="theme-color" content="#1a1a1a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="ROV Bench" />
-  <meta name="description" content="Complete ROV Bench covering Soldering, Board Rework, Hydraulics, Fiber Optics, Electrical/HV Safety, Schematics, LARS, and HSEQ." />
-  <title>ROV Bench</title>
+  <meta name="apple-mobile-web-app-title" content="ROV" />
+  <meta name="description" content="Complete ROV covering Soldering, Board Rework, Hydraulics, Fiber Optics, Electrical/HV Safety, Schematics, LARS, and HSEQ." />
+  <title>ROV</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="apple-touch-icon" href="icon-192.png" />
   <style>
@@ -831,7 +831,7 @@
         </div>
         <div>
           <div class="brand-title">
-            ROV Bench
+            ROV
             <span id="pwa-badge" class="pwa-status-badge" title="Progressive Web App & Offline Cache Status">
               <span id="net-dot" class="status-dot"></span>
               <span id="pwa-status-text">PWA READY</span>
@@ -870,7 +870,7 @@
         <div class="player-wrapper">
           <iframe
             id="yt-player"
-            title="ROV Bench Video Player"
+            title="ROV Video Player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen
             referrerpolicy="strict-origin-when-cross-origin">
@@ -1137,8 +1137,8 @@
       if (appleIconLink) appleIconLink.href = icon192;
 
       const manifestObj = {
-        name: "ROV Bench",
-        short_name: "ROV Bench",
+        name: "ROV",
+        short_name: "ROV",
         description: "Subsea ROV Technician Training: Soldering, Board Rework, Relays, Servos, Hydraulics, and Fiber Optics.",
         start_url: window.location.href.split("#")[0],
         display: "standalone",
@@ -1235,7 +1235,7 @@
       window.addEventListener("appinstalled", () => {
         installBtn.style.display = "none";
         badgeText.textContent = "INSTALLED APP";
-        showToast("ROV Bench installed!");
+        showToast("ROV installed!");
       });
     }
 

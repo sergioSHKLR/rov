@@ -1,6 +1,6 @@
 {
-  "name": "ROV Bench",
-  "short_name": "ROV Bench",
+  "name": "ROV",
+  "short_name": "ROV",
   "description": "Self-led ROV maintainer training curriculum",
   "start_url": "./",
   "scope": "./",
