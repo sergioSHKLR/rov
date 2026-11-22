@@ -1112,51 +1112,9 @@
     }
 
     /* ==========================================================================
-       3. PWA MANIFEST (DYNAMIC BLOB) & SERVICE WORKER REGISTRATION
+       3. SERVICE WORKER REGISTRATION (manifest + icons: static manifest.webmanifest)
        ========================================================================== */
     function initPWA() {
-      // Generate crisp tactical ROV SVG icons as data URLs
-      const createSvgIcon = (size) => {
-        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 512 512">
-          <rect width="512" height="512" rx="112" fill="#0f172a"/>
-          <rect x="24" y="24" width="464" height="464" rx="92" fill="none" stroke="#06b6d4" stroke-width="16"/>
-          <rect x="96" y="168" width="320" height="176" rx="44" fill="#1e293b" stroke="currentColor" stroke-width="20"/>
-          <circle cx="184" cy="256" r="36" fill="#06b6d4"/>
-          <circle cx="328" cy="256" r="36" fill="#06b6d4"/>
-          <path d="M256 168V104M196 104h120M152 344v52M360 344v52" stroke="currentColor" stroke-width="22" stroke-linecap="round"/>
-        </svg>`;
-        return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
-      };
-
-      const icon192 = createSvgIcon(192);
-      const icon512 = createSvgIcon(512);
-
-      const appleIconLink = document.getElementById("dynamic-apple-icon");
-      if (appleIconLink) appleIconLink.href = icon192;
-
-      const manifestObj = {
-        name: "ROV",
-        short_name: "ROV",
-        description: "Subsea ROV Technician Training: Soldering, Board Rework, Relays, Servos, Hydraulics, and Fiber Optics.",
-        start_url: window.location.href.split("#")[0],
-        display: "standalone",
-        background_color: "#666666",
-        theme_color: "#0f172a",
-        orientation: "any",
-        icons: [
-          { src: icon192, sizes: "192x192", type: "image/svg+xml", purpose: "any maskable" },
-          { src: icon512, sizes: "512x512", type: "image/svg+xml", purpose: "any maskable" }
-        ]
-      };
-
-      try {
-        const manifestBlob = new Blob([JSON.stringify(manifestObj)], { type: "application/manifest+json" });
-        const manifestURL = URL.createObjectURL(manifestBlob);
-        document.getElementById("dynamic-manifest").setAttribute("href", manifestURL);
-      } catch (e) {
-        console.warn("Manifest Blob creation skipped:", e);
-      }
-
       // Register inline Service Worker where supported by origin (http/https)
       const badgeText = document.getElementById("pwa-status-text");
       if ("serviceWorker" in navigator && (window.location.protocol === "https:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
