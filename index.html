@@ -22,11 +22,11 @@
   <meta property="og:title" content="ROV" />
   <meta property="og:description" content="Self-led ROV maintainer training curriculum." />
   <meta property="og:url" content="https://sergioshklr.github.io/rov/" />
-  <meta property="og:image" content="https://sergioshklr.github.io/rov/og.png" />
+  <meta property="og:image" content="https://sergioshklr.github.io/rov/og.png?v=20261122" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://sergioshklr.github.io/rov/x-card.png" />
+  <meta name="twitter:image" content="https://sergioshklr.github.io/rov/x-card.png?v=20261122" />
   <style>
     @font-face { font-family: "Martian Mono"; src: url("fonts/MartianMono-Condensed[wght].woff2") format("woff2"); font-weight: 100 800; font-style: normal; font-display: swap; }
 
@@ -1140,7 +1140,7 @@
         description: "Subsea ROV Technician Training: Soldering, Board Rework, Relays, Servos, Hydraulics, and Fiber Optics.",
         start_url: window.location.href.split("#")[0],
         display: "standalone",
-        background_color: "#0b1120",
+        background_color: "#666666",
         theme_color: "#0f172a",
         orientation: "any",
         icons: [
@@ -1161,7 +1161,7 @@
       const badgeText = document.getElementById("pwa-status-text");
       if ("serviceWorker" in navigator && (window.location.protocol === "https:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
         const swCode = `
-          const CACHE_NAME = 'rov-curriculum-v3';
+          const CACHE_NAME = 'rov-curriculum-v4';
           self.addEventListener('install', (event) => {
             self.skipWaiting();
             event.waitUntil(
