@@ -10,29 +10,25 @@
   <meta name="description" content="Complete ROV covering Soldering, Board Rework, Hydraulics, Fiber Optics, Electrical/HV Safety, Schematics, LARS, and HSEQ." />
   <title>ROV</title>
   <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="icon" href="favicon.ico" sizes="48x48" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="apple-touch-startup-image" href="splash/splash-iphone-se-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
+  <link rel="apple-touch-startup-image" href="splash/splash-iphone-13-14-1170x2532.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+  <link rel="apple-touch-startup-image" href="splash/splash-iphone-15-16-1179x2556.png" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+  <link rel="apple-touch-startup-image" href="splash/splash-iphone-16-pro-max-1320x2868.png" media="(device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
+  <link rel="apple-touch-startup-image" href="splash/splash-ipad-air-11-1640x2360.png" media="(device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="ROV" />
+  <meta property="og:description" content="Self-led ROV maintainer training curriculum." />
+  <meta property="og:url" content="https://sergioshklr.github.io/rov/" />
+  <meta property="og:image" content="https://sergioshklr.github.io/rov/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://sergioshklr.github.io/rov/x-card.png" />
   <style>
-    @font-face {
-      font-family: "SHKLR Mono Narrow";
-      src: url("fonts/SHKLRMonoNarrow-Regular.woff2") format("woff2");
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: "SHKLR Mono Narrow";
-      src: url("fonts/SHKLRMonoNarrow-Medium.woff2") format("woff2");
-      font-weight: 500;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: "SHKLR Mono Narrow";
-      src: url("fonts/SHKLRMonoNarrow-Bold.woff2") format("woff2");
-      font-weight: 700;
-      font-style: normal;
-      font-display: swap;
-    }
+    @font-face { font-family: "Martian Mono"; src: url("fonts/MartianMono-Condensed[wght].woff2") format("woff2"); font-weight: 100 800; font-style: normal; font-display: swap; }
 
     /* ==========================================================================
        DESIGN TOKENS & RESET (Zero-Dependency Tactical/Subsea Dark UI)
@@ -56,8 +52,10 @@
       --accent-emerald: #10b981;
       --accent-emerald-dim: rgba(16, 185, 129, 0.15);
       --accent-rose: #f43f5e;
-      --font-sans: "SHKLR Mono Narrow", ui-monospace, "Monaspace Neon", monospace;
-      --font-mono: "SHKLR Mono Narrow", ui-monospace, "Monaspace Neon", monospace;
+      --font-brand: "Martian Mono", ui-monospace, monospace;
+      --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-sans: var(--font-ui);
+      --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
       --radius-sm: 6px;
       --radius-md: 10px;
       --radius-lg: 14px;
@@ -129,16 +127,16 @@
       width: 38px;
       height: 38px;
       border-radius: var(--radius-md);
-      background: linear-gradient(135deg, #7c3aed, #1a1a1a);
-      border: 1px solid var(--accent-cyan-border);
+      background: #666666; /* SHKLR kit rev 4: ROV icon plate */
+      color: #6aa84f; /* kit wrench colour */
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      box-shadow: 0 0 15px rgba(167, 139, 250, 0.25);
     }
 
     .brand-title {
+      font-family: var(--font-brand);
       font-size: 1.05rem;
       font-weight: 700;
       letter-spacing: 0.02em;
@@ -1163,7 +1161,7 @@
       const badgeText = document.getElementById("pwa-status-text");
       if ("serviceWorker" in navigator && (window.location.protocol === "https:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
         const swCode = `
-          const CACHE_NAME = 'rov-curriculum-v2';
+          const CACHE_NAME = 'rov-curriculum-v3';
           self.addEventListener('install', (event) => {
             self.skipWaiting();
             event.waitUntil(

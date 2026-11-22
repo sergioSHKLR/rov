@@ -1,0 +1,35 @@
+{
+ "_note": "SHKLR brand kit rev 4 (22 Nov 2026; rev 3 approved 19 Nov 2026). plate = icon/tile background = app surface it was sampled from; ink/muted = text on that plate; glyph = icon stroke/fill colours with WCAG contrast vs plate.",
+ "apps": {
+  "rov": {
+   "name": "ROV",
+   "mode": "single",
+   "plates": {
+    "dark": {
+     "plate": "#666666",
+     "source": "icon plate grey #666666 (Chief rev 4; live icon was a square #1a1a1a plate); app/theme/OG background stays live #1a1a1a",
+     "ink": "#f2f2f2",
+     "muted": "#e4e4e4",
+     "ink_contrast": 5.13,
+     "muted_contrast": 4.52,
+     "glyph": [
+      {
+       "role": "wrench (Lucide, rev 4)",
+       "hex": "#6aa84f",
+       "contrast": 2.0
+      }
+     ]
+    }
+   },
+   "tagline": "ROV maintainer training",
+   "tagline_status": "final",
+   "app_background": {
+    "hex": "#1a1a1a",
+    "ink": "#f2f2f2",
+    "muted": "#a6a6a6",
+    "note": "theme-color, manifest and social-card background; icon plate stays #666666",
+    "icon_plate_contrast_vs_bg": 3.03
+   }
+  }
+ }
+}

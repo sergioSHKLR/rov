@@ -1,0 +1,15 @@
+/* SHKLR brand kit — colour tokens (rev 4, 22 Nov 2026; rev 3 approved 19 Nov 2026). Generated; do not hand-edit. */
+:root {
+  --shklr-ink: #111111;
+  --shklr-ink-inverse: #f2f2f2;
+  --shklr-hairline: #cfcfcf;
+  --rov-plate: #666666;
+  --rov-ink: #f2f2f2;
+  --rov-muted: #e4e4e4;
+  --rov-glyph-1: #6aa84f; /* wrench (Lucide, rev 4) · 2.0:1 */
+  --rov-app-bg: #1a1a1a; /* app/theme/OG background; icon plate #666666 (3.03:1 vs bg) */
+  --rov-app-ink: #f2f2f2;
+  --rov-app-muted: #a6a6a6;
+}
+/* dual-mode apps: map the active scheme */
+.rov { --app-plate: var(--rov-plate); --app-ink: var(--rov-ink); --app-muted: var(--rov-muted); } /* single mode */
