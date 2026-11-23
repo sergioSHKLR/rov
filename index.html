@@ -1115,51 +1115,17 @@
        3. SERVICE WORKER REGISTRATION (manifest + icons: static manifest.webmanifest)
        ========================================================================== */
     function initPWA() {
-      // Register inline Service Worker where supported by origin (http/https)
+      // Register the service worker (sw.js next to index.html; scope = this folder, /rov/ on Pages).
+      // A blob: URL can't be used here: browsers only register service workers from http(s) script URLs.
       const badgeText = document.getElementById("pwa-status-text");
       if ("serviceWorker" in navigator && (window.location.protocol === "https:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
-        const swCode = `
-          const CACHE_NAME = 'rov-curriculum-v4';
-          self.addEventListener('install', (event) => {
-            self.skipWaiting();
-            event.waitUntil(
-              caches.open(CACHE_NAME).then((cache) => cache.addAll([self.location.href]).catch(() => {}))
-            );
+        navigator.serviceWorker.register("./sw.js", { scope: "./" })
+          .then(() => navigator.serviceWorker.ready)
+          .then(() => { badgeText.textContent = "PWA + SW ACTIVE"; })
+          .catch((err) => {
+            console.warn("Service worker registration failed:", err);
+            badgeText.textContent = "LOCAL STORAGE READY";
           });
-          self.addEventListener('activate', (event) => {
-            event.waitUntil(self.clients.claim());
-          });
-          self.addEventListener('fetch', (event) => {
-            if (event.request.method !== 'GET') return;
-            // Network-first for the page itself so updates land immediately
-            if (event.request.mode === 'navigate' || event.request.destination === 'document') {
-              event.respondWith(
-                fetch(event.request).catch(() => caches.match(event.request))
-              );
-              return;
-            }
-            event.respondWith(
-              caches.match(event.request).then((cached) => {
-                return cached || fetch(event.request).then((response) => {
-                  if (response && response.status === 200 && response.type === 'basic') {
-                    const clone = response.clone();
-                    caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-                  }
-                  return response;
-                }).catch(() => cached);
-              })
-            );
-          });
-        `;
-        try {
-          const swBlob = new Blob([swCode], { type: "application/javascript" });
-          const swUrl = URL.createObjectURL(swBlob);
-          navigator.serviceWorker.register(swUrl)
-            .then(() => { badgeText.textContent = "PWA + SW ACTIVE"; })
-            .catch(() => { badgeText.textContent = "LOCAL STORAGE READY"; });
-        } catch (err) {
-          badgeText.textContent = "LOCAL STORAGE READY";
-        }
       } else {
         badgeText.textContent = "STANDALONE / OFFLINE READY";
       }
